@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zou.shopping.dao.UserMapper">
+
+  <select id="selectByPrimary" resultType="User" parameterType="java.lang.Long">
+        select distinct * FROM user u where u.u_id=#{id} limit 1
+  </select>
+
+    <select id="selectByUsername" resultType="User" parameterType="java.lang.String">
+    select distinct * FROM user u where u.username=#{username} limit 1
+  </select>
+
+  <select id="selectBylikeUsername" resultType="User" parameterType="java.lang.String">
+    select distinct * FROM user u where u.username="%"#{username}"%"
+  </select>
+
+  <select id="getAllAdminRoleAdmin" resultType="User">
+    select * from user u left join user_role ur on u.u_id=ur.u_id where ur.r_id=2
+  </select>
+
+    <select id="getAllUserRoleUser" resultType="User">
+    select * from user u left join user_role ur on u.u_id=ur.u_id where ur.r_id=3
+  </select>
+
+    <select id="getRoles" resultType="java.lang.String">
+    select distinct r.name from user u
+    left join user_role ur on u.u_id=ur.u_id
+    left join role r on ur.r_id=r.r_id
+    where u.username = #{username,jdbcType=VARCHAR}
+  </select>
+
+    <select id="checkUser" resultType="java.lang.Long" parameterType="java.lang.String">
+    select count(*) from user where username = #{username}
+  </select>
+
+    <insert id="saveUser" parameterType="User" useGeneratedKeys="true" keyProperty="uId">
+    insert into user (username,password,nickname,status) values (#{username},#{password},#{nickname},1)
+  </insert>
+
+  <insert id="setUserRole" parameterType="java.lang.Long">
+    insert into user_role (u_id,r_id) values (#{uId},3)
+  </insert>
+
+  <update id="deleteUser" parameterType="java.lang.Integer">
+    update user set status=2 where u_id=#{id};
+  </update>
+
+  <update id="startUser" parameterType="java.lang.Integer">
+  update user set status=1 where u_id=#{id};
+</update>
+
+  <update id="updateUser" parameterType="User">
+    update user set username=#{username},password=#{password},nickname=#{nickname} where u_id=#{uId}
+  </update>
+</mapper>

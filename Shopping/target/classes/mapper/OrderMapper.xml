@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zou.shopping.dao.OrderMapper">
+
+    <insert id="insert" parameterType="Order">
+    insert into `order`
+    (o_id,order_status,target_address,telephone,price,description,u_id,username)
+    values
+    (#{oId},#{orderStatus},#{targetAddress},#{telephone},#{price},#{description},#{uId},#{username})
+    </insert>
+
+    <insert id="insertDetail" parameterType="Detail">
+    insert into order_detail (book_num,bookName,book_price,o_id)
+    values (#{bookNum},#{bookName},#{bookPrice},#{oId})
+    </insert>
+
+    <select id="getAllOrder" resultType="Order">
+        select * from `order`
+    </select>
+
+    <select id="getAllOrderByUser" parameterType="java.lang.Long" resultType="Order">
+        select * from `order` where u_id=#{id}
+    </select>
+
+    <select id="getAllDetailByOrder" parameterType="java.lang.String" resultType="Detail">
+        select * from `order_detail` where o_id=#{id}
+    </select>
+
+</mapper>

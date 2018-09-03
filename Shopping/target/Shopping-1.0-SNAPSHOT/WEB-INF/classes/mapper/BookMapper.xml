@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zou.shopping.dao.BookMapper">
+
+
+  <select id="selectByPrimaryKey" resultType="Book" parameterType="java.lang.Long">
+    select * from book where b_id=#{bid} limit 1
+  </select>
+
+  <select id="getAllBook" resultType="Book">
+    select * from book
+  </select>
+
+  <select id="getAllBookByPriceDESC" resultType="Book">
+    SELECT * from book order by price desc
+  </select>
+
+  <select id="getAllBookByPriceASC" resultType="Book">
+    SELECT * from book order by price ASC
+  </select>
+
+  <select id="getAllBookByType" resultType="Book" parameterType="java.lang.Integer">
+    select b.* from book b,book_category bc,category c
+    where b.b_id=bc.b_id and bc.c_id=c.c_id and c.c_id=#{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="getAllBookByName" resultType="Book" parameterType="java.lang.String">
+    select distinct * from book where book_name like "%"#{bookName}"%"
+  </select>
+
+  <delete id="deleteBook_Category" parameterType="java.lang.Long">
+    delete from book_category where b_id=#{bookId}
+  </delete>
+
+  <delete id="deleteBookByPrimary" parameterType="java.lang.Long">
+    delete from book where b_id=#{bookId}
+  </delete>
+
+  <update id="updateBook" parameterType="Book">
+    update book set author=#{author},book_name=#{bookName},
+    price=#{price},total_page=#{totalPage},pubilshing=#{pubilshing},stock=#{stock},sale=#{sale} where b_id=#{bId}
+  </update>
+
+  <insert id="saveBook" parameterType="Book" useGeneratedKeys="true" keyProperty="bId">
+    insert into book (author,book_image,book_name,price,total_page,pubilshing,stock)
+     values (#{author},#{bookImage},#{bookName},#{price},#{totalPage},#{pubilshing},#{stock})
+  </insert>
+
+  <insert id="saveBookCategory" parameterType="hashmap">
+    insert into book_category (b_id,c_id)
+    values (#{bId},#{cId})
+  </insert>
+
+  <update id="reduceBook" parameterType="hashmap">
+    update book set stock=stock-#{stock},sale=sale+#{stock} where b_id=#{bId}
+  </update>
+
+  <select id="checkBookStock" parameterType="java.lang.Long" resultType="java.lang.Long">
+    select stock from book where b_id=#{bId}
+  </select>
+
+  <select id="selectBookBySale" resultType="Book">
+    select * from book order by sale desc limit 5
+  </select>
+</mapper>

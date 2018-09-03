@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"></property>
+        </commentGenerator>
+        <!--配置数据库连接信息-->
+        <jdbcConnection driverClass="org.gjt.mm.mysql.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/gdut_ssm"
+                        userId="root"
+                        password="zou123">
+        </jdbcConnection>
+        <javaTypeResolver >
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+        <!--指定javaBean生产的位置-->
+        <javaModelGenerator
+                targetPackage="cn.zou.shopping.bean"
+                targetProject=".\src\main\java">
+            <property name="enableSubPackages" value="true" />
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+        <!--指定sql映射文件的生成位置-->
+        <sqlMapGenerator
+                targetPackage="mapper"
+                targetProject=".\src\main\resources">
+            <property name="enableSubPackages" value="true" />
+        </sqlMapGenerator>
+        <!--指定dao接口的生成位置，mapper接口-->
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="cn.zou.shopping.dao"
+                             targetProject=".\src\main\java">
+            <property name="enableSubPackages" value="true" />
+        </javaClientGenerator>
+        <!--table指定每个表的生成策略-->
+        <table tableName="user" domainObjectName="User"/>
+        <table tableName="role" domainObjectName="Role"/>
+        <table tableName="book" domainObjectName="Book"/>
+        <table tableName="category" domainObjectName="Category"/>
+        <table tableName="user_address" domainObjectName="Address"/>
+        <table tableName="order" domainObjectName="Order"/>
+        <table tableName="order_detail" domainObjectName="Detail"/>
+    </context>
+</generatorConfiguration>
