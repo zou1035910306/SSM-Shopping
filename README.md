@@ -1,5 +1,7 @@
 此系列为具备一定逻辑功能的移动网上书城的源码
+
 适用于数据库课设及初学者对自己SSM掌握能力的提升
+
 [ssm系列实战(1)——需求分析及数据库设计](https://blog.csdn.net/qq_36521579/article/details/80719328)
 
 [ssm系列实战(2)——SSM+Shiro框架整合](https://blog.csdn.net/qq_36521579/article/details/80719770)
